@@ -1,18 +1,18 @@
 ---
 title: "Reproducible Research: Peer Assignment 1"
 author: "AUTHOR NAME BLINDED FOR PEER ASSESSMENT"
-date: "March 10, 2015"
-#output: beamer_presentation
+date: "March 13, 2015"
+
 ---
 
 ### Loading and preprocessing the data
 
 ```{r}
 #Load data
-unz(filename="activity.zip")
 ass1data <- read.csv("activity.csv", colClasses = c("integer", "Date", "factor"))
 str(ass1data)
 attach(ass1data)
+
 ```
 
 
@@ -24,6 +24,7 @@ the dataset.
 1. Make a histogram of the total number of steps taken each day
 
 ```{r}
+
 #Extract mean steps per day
 stepsday <- aggregate(x=ass1data$steps, by=list(date), FUN="sum")
 str(stepsday)
@@ -57,6 +58,7 @@ names(stepsinterval)[1] <- "interval"
 names(stepsinterval)[2] <- "meanSteps"
 str(stepsinterval)
 
+library(lattice)
 #Plot average number of steps taken per interval in time series plot
 xyplot(stepsinterval$meanSteps ~ stepsinterval$interval, type = "l", 
        xlab = "Interval", ylab = "Number of steps")
@@ -162,7 +164,6 @@ mSteps <- aggregate(ass1data_imp$steps,
 names(mSteps)[3] <- "meanSteps"
 
 #Plot number of steps taken on weekdays and weekenddays
-library(lattice)
 xyplot(mSteps$meanSteps ~ mSteps$interval | mSteps$weekdays, 
        layout = c(1, 2), type = "l", 
        xlab = "Interval", ylab = "Number of steps")
